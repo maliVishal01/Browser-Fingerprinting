@@ -5,11 +5,10 @@ Mali vishal
 
 ## 🔹 What Your Project Demonstrates
 - **Device Information:** Screen size, width/height  
-- **IP & Location:** User का approximate location और IP address  
-- **Battery Status:** Percentage और charger connected (yes/no)  
+- **IP & Location:** User  approximate location IP address  
+- **Battery Status:** Percentage charger connected (yes/no)  
 - **UI/UX:** Responsive design, good interface  
-- **Awareness Angle:** Background music + interactive demo → लोगों को attract करता है और साथ ही educate करता है  
-
+- **Awareness Angle:** Background music + interactive demo → 
 ---
 
 ## 📄 Suggested README.md for Your Project
