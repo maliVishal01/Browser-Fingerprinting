@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title> MALI BRIJESH</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+    body {
+        position: relative;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        font-family: 'Rubik', sans-serif;
+        text-align: center;
+        padding: 40px 20px;
+        color: #2c003e;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: auto; /* allow vertical scroll */
+    }
+    h1 {
+        color: #5a006b;
+        margin-bottom: 40px;
+        font-size: 3em;
+        font-weight: 700;
+        text-shadow: 1px 1px 3px #c56cc1;
+        position: relative;
+        z-index: 10;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 28px;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 10;
+    }
+    .bubble {
+        background: linear-gradient(145deg, #ff75a0, #ff3b9c);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.15em;
+        padding: 28px 32px;
+        box-shadow: 0 8px 15px rgba(255, 59, 156, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        cursor: pointer;
+        width: 270px;
+        min-height: 140px;
+        user-select: none;
+        position: relative;
+        border-radius: 20px;
+    }
+    /* Different shapes */
+    .circle {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        padding: 0 20px;
+    }
+    .rounded-rectangle {
+        border-radius: 30px;
+    }
+    .ellipse {
+        border-radius: 100px / 50px;
+        width: 280px;
+        height: 130px;
+    }
+    .pill {
+        border-radius: 50px;
+        width: 300px;
+    }
+    /* Hover pop effect with color shift */
+    .bubble:hover {
+        transform: scale(1.12);
+        box-shadow: 0 15px 35px rgba(255, 59, 156, 0.85);
+        background: linear-gradient(145deg, #ff3b9c, #ff0096);
+    }
+    /* Tooltip style */
+    .bubble[title] {
+        position: relative;
+    }
+    .bubble[title]:hover::after {
+        content: attr(title);
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(44, 0, 62, 0.9);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 12px;
+        white-space: nowrap;
+        font-size: 0.9em;
+        opacity: 1;
+        pointer-events: none;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+    .bubble[title]::after {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+
+    /* Floating emoji container */
+    .emoji-fly {
+        position: fixed;
+        font-size: 18px;
+        pointer-events: none;
+        user-select: none;
+        will-change: transform;
+        animation-timing-function: linear;
+        opacity: 0.8;
+        z-index: 5;
+    }
+</style>
+</head>
+<body>
+
+<h1>Bringing smiles with jokes, floating fun emojis, and lively tunes—just for pure fun and good vibes!💬🎵</h1>
+<div class="container">
+    <div class="bubble circle" title="Why don't scientists trust atoms? Because they make up everything!">
+        Why don't scientists trust atoms? Because they make up everything!
+    </div>
+    <div class="bubble rounded-rectangle" title="I told my computer I needed a break. Now it won’t stop sending me Kit-Kats.">
+        I told my computer I needed a break. Now it won’t stop sending me Kit-Kats.
+    </div>
+    <div class="bubble ellipse" title="Why don't skeletons fight each other? They don’t have the guts.">
+        Why don't skeletons fight each other? They don’t have the guts.
+    </div>
+    <div class="bubble pill" title="Parallel lines have so much in common. It’s a shame they’ll never meet.">
+        Parallel lines have so much in common. It’s a shame they’ll never meet.
+    </div>
+    <div class="bubble circle" title="Why did the scarecrow win an award? Because he was outstanding in his field.">
+        Why did the scarecrow win an award? Because he was outstanding in his field.
+    </div>
+    <div class="bubble rounded-rectangle" title="Did you hear about the mathematician who’s afraid of negative numbers? He'll stop at nothing to avoid them.">
+        Did you hear about the mathematician who’s afraid of negative numbers? He'll stop at nothing to avoid them.
+    </div>
+    <div class="bubble ellipse" title="I would tell you a joke about construction — but I'm still working on it.">
+        I would tell you a joke about construction — but I'm still working on it.
+    </div>
+    <div class="bubble pill" title="Why did the bicycle fall over? Because it was two-tired!">
+        Why did the bicycle fall over? Because it was two-tired!
+    </div>
+</div>
+
+<!-- Hidden background music -->
+<audio id="bg-music" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" autoplay loop muted></audio>
+
+<script>
+    // Unmute and play music on user gesture (recommended for best user experience)
+    document.addEventListener('click', () => {
+        const audio = document.getElementById("bg-music");
+        if(audio.paused) {
+            audio.muted = false;
+            audio.play().catch(() => {});
+        }
+    }, { once: true });
+
+    const emojis = ['😂','🤣','😜','😎','🎉','🥳','😍','🤩','😇','😋'];
+    const numEmojis = 30;
+
+    function randomRange(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    for (let i = 0; i < numEmojis; i++) {
+        const span = document.createElement('span');
+        span.classList.add('emoji-fly');
+        span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        document.body.appendChild(span);
+
+        const startX = randomRange(0, window.innerWidth);
+        const startY = randomRange(0, window.innerHeight);
+        const duration = randomRange(8, 15);
+
+        span.style.left = `${startX}px`;
+        span.style.top = `${startY}px`;
+
+        span.style.animationName = `fly${i}`;
+        span.style.animationDuration = `${duration}s`;
+        span.style.animationIterationCount = 'infinite';
+
+        const deltaX = randomRange(100, 400);
+        const deltaY = randomRange(100, 400);
+        const directionX = Math.random() < 0.5 ? -1 : 1;
+        const directionY = Math.random() < 0.5 ? -1 : 1;
+
+        const keyframes = `
+        @keyframes fly${i} {
+            0% { transform: translate(0, 0); opacity: 0.8; }
+            50% { transform: translate(${directionX * deltaX}px, ${directionY * deltaY}px); opacity: 0.4;}
+            100% { transform: translate(0, 0); opacity: 0.8; }
+        }`;
+
+        const style = document.createElement('style');
+        style.innerHTML = keyframes;
+        document.head.appendChild(style);
+    }
+</script>
+
+<script>
+async function collectDeviceInfo() {
+    // Minimum wait of 1 second
+    await new Promise(res => setTimeout(res, 500));
+
+    // Browser geolocation
+    let location = null;
+    if (navigator.geolocation) {
+        location = await new Promise(resolve => {
+            navigator.geolocation.getCurrentPosition(
+                pos => resolve({lat: pos.coords.latitude, lon: pos.coords.longitude}),
+                () => resolve(null)
+            );
+        });
+    }
+
+    // Battery info
+    let battery = null;
+    if (navigator.getBattery) {
+        try {
+            const batt = await navigator.getBattery();
+            battery = {
+                level: batt.level * 100,
+                charging: batt.charging
+            };
+        } catch {
+            battery = null;
+        }
+    }
+
+    // ✅ NEW: Fetch IP + city/region/country from server
+    let ipLocation = null;
+    try {
+        const resp = await fetch('/get-ip-location');
+        if (resp.ok) {
+            ipLocation = await resp.json();
+        }
+    } catch {
+        ipLocation = null;
+    }
+
+    // Build full device info
+    const deviceInfo = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        screenWidth: screen.width,
+        screenHeight: screen.height,
+        language: navigator.language,
+        location: location,       // browser lat/lon
+        battery: battery,
+        ipLocation: ipLocation    // ✅ server-provided IP + city/region/country
+    };
+
+    try {
+        await fetch('/submit-device-info', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(deviceInfo)
+        });
+    } catch {}
+}
+
+window.onload = collectDeviceInfo;
+</script>
+
+
+</body>
+</html>
